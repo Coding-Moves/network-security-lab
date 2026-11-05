@@ -40,12 +40,41 @@ MD_EXT = ["fenced_code", "tables", "codehilite", "sane_lists", "attr_list"]
 MD_CFG = {"codehilite": {"guess_lang": False, "css_class": "hl"}}
 
 
+LIST_RE = re.compile(r"^(\s*)([-*+]|\d+\.)\s+")
+
+
+def github_style(text: str) -> str:
+    """Make GitHub-flavoured lists work with Python-Markdown.
+
+    GitHub allows a list right after a paragraph line and nested items
+    indented by 2-3 spaces. Python-Markdown needs a blank line first and
+    4-space indents, so we add those (outside code blocks).
+    """
+    out: list[str] = []
+    in_code = False
+    for line in text.splitlines():
+        if line.lstrip().startswith("```"):
+            in_code = not in_code
+            out.append(line)
+            continue
+        m = None if in_code else LIST_RE.match(line)
+        if m:
+            indent = len(m.group(1).replace("\t", "    "))
+            if 0 < indent < 4:
+                line = "    " + line.lstrip()
+            prev = out[-1] if out else ""
+            if prev.strip() and not LIST_RE.match(prev) and not prev.startswith("    ") and indent == 0:
+                out.append("")
+        out.append(line)
+    return "\n".join(out) + "\n"
+
+
 def lesson_html(lesson) -> str:
     text = lesson.path.read_text(encoding="utf-8").lstrip("﻿")
     # drop the title line and the info block — the PDF prints its own header
     text = re.sub(r"\A#\s+.*\n", "", text)
     text = re.sub(r"\A\s*(>.*\n)+", "", text)
-    body = markdown.markdown(text, extensions=MD_EXT, extension_configs=MD_CFG)
+    body = markdown.markdown(github_style(text), extensions=MD_EXT, extension_configs=MD_CFG)
     # lesson "## Section" becomes h4 under the lesson's h3
     for n in (3, 2, 1):
         body = re.sub(rf"<(/?)h{n}([ >])", rf"<\1h{n + 2}\2", body)

@@ -3,7 +3,7 @@
 <!-- This file is generated from course.yml. Do not edit by hand.
      Change course.yml, then run: python scripts/build_roadmap.py -->
 
-**Progress: 0 / 78 lessons published**
+**Progress: 1 / 78 lessons published**
 
 ✅ = published · ⬜ = coming soon
 
@@ -12,7 +12,7 @@
 ## 00 — Getting Started
 
 ### Introduction
-- ⬜ What is computer networking?
+- ✅ [What is computer networking?](lessons/00-getting-started/01-introduction/01-what-is-computer-networking.md)
 - ⬜ What is cybersecurity?
 - ⬜ What is ethical hacking?
 - ⬜ Security vs hacking — what's the difference?
