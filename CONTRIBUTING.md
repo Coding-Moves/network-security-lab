@@ -12,6 +12,22 @@ Thanks for helping! Please read this before opening a pull request.
 **Contributors cannot change lesson files** (or anything outside `projects/`).
 A check runs on every pull request. If your PR changes files outside `projects/`, it will fail and can't be merged.
 
+## Automatic checks on every PR
+
+| Check | What it looks at |
+| ----- | ---------------- |
+| **Protect lessons** | Contributors only changed files in `projects/` |
+| **Check course** | Lesson names and folders match `course.yml` · required sections are there and in order · links and images work · `ROADMAP.md` is up to date · project folder name and README sections · no secrets or huge files |
+| **Course PDF** | Builds a preview PDF — download it from the PR's check run (Artifacts) |
+
+PRs that don't touch lessons, projects or the roadmap pass straight away.
+Run the same check on your computer before you push:
+
+```bash
+pip install -r scripts/requirements.txt
+python scripts/validate.py
+```
+
 ---
 
 ## 1. Adding a project
@@ -19,6 +35,7 @@ A check runs on every pull request. If your PR changes files outside `projects/`
 1. Fork the repo.
 2. Create a new folder: `projects/your-project-name/` (lowercase, use `-` between words).
 3. Add a `README.md` inside it using the [project template](projects/PROJECT_TEMPLATE.md).
+   Required sections: What it does · How to run · How I tested it · Safety note, plus the `**Author:**` line.
 4. Add your code in the same folder.
 5. Open a pull request.
 

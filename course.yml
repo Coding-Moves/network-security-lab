@@ -1,0 +1,242 @@
+# ─────────────────────────────────────────────────────────────
+#  Network Security Lab — course structure (single source of truth)
+#
+#  Everything is built from this file:
+#    • ROADMAP.md          → python scripts/build_roadmap.py
+#    • PR checks           → python scripts/validate.py
+#    • the course PDF      → python scripts/build_pdf.py
+#
+#  Lesson file path = lessons/<phase-id>-<phase-slug>/<module-id>-<module-slug>/<lesson-id>-<lesson-slug>.md
+#  Example:           lessons/01-networking-fundamentals/01-tcp-ip/01-what-is-an-ip-address.md
+#
+#  Rules:
+#    • id   = two digits ("01", "02" ...). Order in this file = order in the course.
+#    • slug = lowercase letters, numbers and "-" only.
+#    • To add a lesson to the roadmap: add a line here, then run build_roadmap.py.
+#    • A lesson is "done" when its .md file exists. No manual ticking needed.
+# ─────────────────────────────────────────────────────────────
+
+title: Network Security Lab
+subtitle: Learn networking. Understand security. Think like a security engineer.
+
+phases:
+  - id: "00"
+    slug: getting-started
+    title: Getting Started
+    modules:
+      - id: "01"
+        slug: introduction
+        title: Introduction
+        lessons:
+          - { id: "01", slug: what-is-computer-networking, title: "What is computer networking?" }
+          - { id: "02", slug: what-is-cybersecurity, title: "What is cybersecurity?" }
+          - { id: "03", slug: what-is-ethical-hacking, title: "What is ethical hacking?" }
+          - { id: "04", slug: security-vs-hacking, title: "Security vs hacking — what's the difference?" }
+          - { id: "05", slug: legal-boundaries-and-disclosure, title: "Legal boundaries and responsible disclosure" }
+      - id: "02"
+        slug: lab-setup
+        title: Lab Setup
+        lessons:
+          - { id: "01", slug: personal-learning-environment, title: "Setting up a personal learning environment" }
+          - { id: "02", slug: virtual-machines, title: "Understanding virtual machines" }
+          - { id: "03", slug: isolated-practice-network, title: "Building an isolated practice network" }
+
+  - id: "01"
+    slug: networking-fundamentals
+    title: Networking Fundamentals
+    modules:
+      - id: "01"
+        slug: tcp-ip
+        title: TCP/IP and IP Addressing
+        lessons:
+          - { id: "01", slug: what-is-an-ip-address, title: "What is an IP address?" }
+          - { id: "02", slug: ipv4-and-ipv6, title: "IPv4 and IPv6" }
+          - { id: "03", slug: public-and-private-ip, title: "Public and private IP addresses" }
+          - { id: "04", slug: mac-addresses, title: "MAC addresses" }
+          - { id: "05", slug: subnet-masks, title: "Subnet masks" }
+          - { id: "06", slug: cidr-notation, title: "CIDR notation" }
+          - { id: "07", slug: default-gateways, title: "Default gateways" }
+          - { id: "08", slug: tcp-vs-udp, title: "TCP vs UDP" }
+          - { id: "09", slug: ports-and-sockets, title: "Ports and sockets" }
+          - { id: "10", slug: osi-model, title: "The OSI model" }
+          - { id: "11", slug: tcp-ip-model, title: "The TCP/IP model" }
+          - { id: "12", slug: arp-and-icmp, title: "ARP and ICMP" }
+      - id: "02"
+        slug: dns
+        title: DNS
+        lessons:
+          - { id: "01", slug: what-is-dns, title: "What is DNS?" }
+          - { id: "02", slug: how-dns-resolution-works, title: "How DNS resolution works" }
+          - { id: "03", slug: dns-records, title: "DNS records: A, AAAA, CNAME, MX, TXT, NS" }
+          - { id: "04", slug: recursive-and-authoritative, title: "Recursive and authoritative servers" }
+          - { id: "05", slug: dns-caching-and-ttl, title: "DNS caching and TTL" }
+          - { id: "06", slug: doh-and-dot, title: "DNS over HTTPS and DNS over TLS" }
+          - { id: "07", slug: dns-troubleshooting, title: "Basic DNS troubleshooting" }
+      - id: "03"
+        slug: http-https
+        title: HTTP and HTTPS
+        lessons:
+          - { id: "01", slug: how-the-web-works, title: "How the web works" }
+          - { id: "02", slug: http-requests-and-responses, title: "HTTP requests and responses" }
+          - { id: "03", slug: http-methods, title: "HTTP methods" }
+          - { id: "04", slug: status-codes, title: "Status codes" }
+          - { id: "05", slug: headers, title: "Headers" }
+          - { id: "06", slug: https-and-tls, title: "HTTPS and TLS" }
+          - { id: "07", slug: tls-certificates, title: "TLS certificates" }
+          - { id: "08", slug: tls-handshake, title: "The TLS handshake" }
+      - id: "04"
+        slug: routing-switching
+        title: Routing and Switching
+        lessons:
+          - { id: "01", slug: what-is-routing, title: "What is routing?" }
+          - { id: "02", slug: what-is-switching, title: "What is switching?" }
+          - { id: "03", slug: routers-vs-switches, title: "Routers vs switches" }
+          - { id: "04", slug: routing-tables, title: "Routing tables and default routes" }
+          - { id: "05", slug: static-and-dynamic-routing, title: "Static and dynamic routing" }
+          - { id: "06", slug: nat-and-pat, title: "NAT and PAT" }
+          - { id: "07", slug: vlan-basics, title: "VLAN basics" }
+      - id: "05"
+        slug: firewalls
+        title: Firewalls
+        lessons:
+          - { id: "01", slug: what-is-a-firewall, title: "What is a firewall?" }
+          - { id: "02", slug: packet-filtering, title: "Packet filtering" }
+          - { id: "03", slug: stateful-vs-stateless, title: "Stateful vs stateless firewalls" }
+          - { id: "04", slug: firewall-rules, title: "Firewall rules — inbound and outbound" }
+          - { id: "05", slug: host-vs-network-firewalls, title: "Host-based vs network firewalls" }
+          - { id: "06", slug: firewall-configuration, title: "Basic firewall configuration" }
+      - id: "06"
+        slug: vpns
+        title: VPNs
+        lessons:
+          - { id: "01", slug: what-is-a-vpn, title: "What is a VPN and why use one?" }
+          - { id: "02", slug: vpn-types, title: "Remote-access vs site-to-site VPNs" }
+          - { id: "03", slug: tunneling-and-encryption, title: "Tunneling and encryption" }
+          - { id: "04", slug: vpn-limits-and-myths, title: "VPN limits and common myths" }
+
+  - id: "02"
+    slug: linux-fundamentals
+    title: Linux Fundamentals
+    modules:
+      - id: "01"
+        slug: command-line
+        title: Command Line
+        lessons:
+          - { id: "01", slug: terminal-and-shell, title: "Terminal and shell" }
+          - { id: "02", slug: navigating-directories, title: "Navigating directories" }
+          - { id: "03", slug: files-and-directories, title: "Working with files and directories" }
+          - { id: "04", slug: searching-files, title: "Searching files" }
+          - { id: "05", slug: pipes-and-redirection, title: "Pipes and redirection" }
+          - { id: "06", slug: environment-variables, title: "Environment variables" }
+          - { id: "07", slug: system-information, title: "Basic system information" }
+      - id: "02"
+        slug: filesystem-permissions
+        title: Filesystem and Permissions
+        lessons:
+          - { id: "01", slug: filesystem-hierarchy, title: "Linux filesystem hierarchy" }
+          - { id: "02", slug: users-and-groups, title: "Users and groups" }
+          - { id: "03", slug: file-permissions, title: "File permissions" }
+          - { id: "04", slug: chmod-and-chown, title: "chmod and chown" }
+          - { id: "05", slug: sudo-and-root, title: "sudo and root" }
+      - id: "03"
+        slug: processes-services
+        title: Processes and Services
+        lessons:
+          - { id: "01", slug: understanding-processes, title: "Understanding processes" }
+          - { id: "02", slug: process-management, title: "Process management and signals" }
+          - { id: "03", slug: systemd-basics, title: "systemd basics" }
+          - { id: "04", slug: managing-services, title: "Managing services" }
+          - { id: "05", slug: system-logs, title: "Viewing system logs" }
+      - id: "04"
+        slug: bash-scripting
+        title: Bash Scripting
+        lessons:
+          - { id: "01", slug: variables, title: "Variables" }
+          - { id: "02", slug: conditions, title: "Conditions" }
+          - { id: "03", slug: loops, title: "Loops" }
+          - { id: "04", slug: functions-and-arguments, title: "Functions and arguments" }
+          - { id: "05", slug: automating-tasks, title: "Automating repetitive tasks" }
+          - { id: "06", slug: log-processing, title: "Log processing scripts" }
+      - id: "05"
+        slug: package-management
+        title: Package Management
+        lessons:
+          - { id: "01", slug: package-managers, title: "Package managers" }
+          - { id: "02", slug: installing-and-updating, title: "Installing, updating and removing software" }
+          - { id: "03", slug: repositories-and-trust, title: "Repositories and trusted sources" }
+
+  # ── Planned phases: no lessons yet. Add modules + lessons when you start a phase. ──
+
+  - id: "03"
+    slug: programming-for-security
+    title: Programming for Security
+    summary: "Python (basics, files, errors, sockets, HTTP requests, JSON/APIs, network automation) · JavaScript (browser basics, DOM, requests, browser security) · SQL (queries, joins, permissions, SQL injection concepts, parameterized queries)"
+    modules: []
+
+  - id: "04"
+    slug: security-fundamentals
+    title: Security Fundamentals
+    summary: "CIA triad · threats, vulnerabilities and risk · attack surface · authentication vs authorization · MFA · access control · hashing vs encryption · symmetric and asymmetric crypto · digital signatures · certificates and PKI · patching · vulnerability management · least privilege · defense in depth"
+    modules: []
+
+  - id: "05"
+    slug: reconnaissance
+    title: Reconnaissance
+    summary: "OSINT · passive vs active recon · domain and DNS research · WHOIS · subdomain enumeration concepts · network discovery · recording findings responsibly"
+    modules: []
+
+  - id: "06"
+    slug: scanning-enumeration
+    title: Scanning and Enumeration
+    summary: "Host discovery · port scanning · TCP/UDP scans · service detection · Nmap · Netcat · directory enumeration · Gobuster · Nikto · false positives"
+    note: "All scanning is done only on your own systems or authorized labs."
+    modules: []
+
+  - id: "07"
+    slug: network-system-security
+    title: Network and System Security
+    summary: "Common attacks and defenses · packet sniffing · Wireshark · segmentation · Linux and Windows security · Active Directory basics · Wi-Fi security · SSH security · hardening · logging and monitoring"
+    modules: []
+
+  - id: "08"
+    slug: web-security
+    title: Web Security
+    summary: "Cookies and sessions · same-origin policy · CORS · input validation · XSS · SQL injection · CSRF · broken access control · misconfiguration · file uploads · API security · Burp Suite · secure coding"
+    note: "Follows the current OWASP Top 10."
+    modules: []
+
+  - id: "09"
+    slug: vulnerability-assessment
+    title: Vulnerability Assessment and Controlled Exploitation
+    summary: "CVEs and CVSS · security advisories · exploit concepts · Metasploit basics · shells and payloads · safe proof-of-concept · privilege escalation basics · cleaning up labs"
+    note: "Only on intentionally vulnerable machines or with explicit permission."
+    modules: []
+
+  - id: "10"
+    slug: reporting
+    title: Reporting
+    summary: "Writing a vulnerability report · evidence · severity and impact · remediation · retesting · a full assessment report"
+    modules: []
+
+  - id: "11"
+    slug: practice-platforms
+    title: Practice Platforms
+    summary: "TryHackMe · Hack The Box · PortSwigger Web Security Academy · VulnHub · CTFs · your own home lab"
+    modules: []
+
+  - id: "12"
+    slug: specialization
+    title: Choose a Specialization
+    summary: "Web app security · network security · Active Directory · cloud · wireless · reverse engineering · red teaming · DevSecOps · security engineering · security operations"
+    modules: []
+
+project_ideas:
+  - Network information collector
+  - DNS lookup and analysis tool
+  - Firewall rule analyzer
+  - Linux security checker
+  - Network traffic / monitoring dashboard
+  - Log monitoring tool
+  - HTTP security header checker
+  - Subdomain inventory tool (authorized domains only)
+  - Security report generator

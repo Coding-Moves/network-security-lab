@@ -1,0 +1,51 @@
+name: Protect lessons
+
+# Contributors may only change files inside projects/.
+# Pull requests from maintainers are allowed to change anything.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check-paths:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Only projects/ can be changed by contributors
+        env:
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: |
+          # Add more maintainers separated by spaces.
+          MAINTAINERS="Muawiya-contact"
+
+          for m in $MAINTAINERS; do
+            if [ "${AUTHOR,,}" = "${m,,}" ]; then
+              echo "Maintainer PR ($AUTHOR) — skipping check."
+              exit 0
+            fi
+          done
+
+          CHANGED=$(git diff --name-only "$BASE...$HEAD")
+          echo "Changed files:"
+          echo "$CHANGED"
+
+          BLOCKED=$(echo "$CHANGED" | grep -Ev '^projects/' || true)
+
+          if [ -n "$BLOCKED" ]; then
+            echo "::error::Contributors can only change files inside projects/."
+            echo "These files are not allowed in your PR:"
+            echo "$BLOCKED"
+            echo "Want to suggest a lesson fix? Open a 'Lesson feedback' issue instead."
+            exit 1
+          fi
+
+          echo "All changes are inside projects/ — OK."

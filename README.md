@@ -25,12 +25,23 @@ Every lesson is small, focused on one topic, and has a practical exercise.
 One lesson = one topic. A new lesson is added about once a day.
 
 ```
+course.yml                   → the course plan (source of the roadmap)
+ROADMAP.md                   → generated from course.yml
 lessons/                     → the course (written by the maintainer)
   01-networking-fundamentals/
     01-tcp-ip/
       01-what-is-an-ip-address.md
+      code/01-what-is-an-ip-address/   → practice code for that lesson
+      assets/                          → images
 projects/                    → projects built by the community
+scripts/                     → checks, roadmap and PDF builders
 ```
+
+## Download the course as a PDF
+
+📘 **[Download the latest PDF](../../releases/download/latest/network-security-lab.pdf)**
+
+The PDF is rebuilt automatically every time something is merged. It has every published lesson, "Coming soon" for the rest, clickable links to each lesson, its practice code and the community projects on GitHub, and a progress page showing how the course grows. A yearly edition is saved every 1 January in [Releases](../../releases).
 
 ## Where to start
 

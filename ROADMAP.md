@@ -1,25 +1,31 @@
 # Learning Roadmap
 
-✅ = published · ⬜ = not yet written
+<!-- This file is generated from course.yml. Do not edit by hand.
+     Change course.yml, then run: python scripts/build_roadmap.py -->
 
-Phases 00–02 are active now. Later phases are planned and may change as the course grows.
+**Progress: 0 / 78 lessons published**
+
+✅ = published · ⬜ = coming soon
 
 ---
 
 ## 00 — Getting Started
 
+### Introduction
 - ⬜ What is computer networking?
 - ⬜ What is cybersecurity?
 - ⬜ What is ethical hacking?
 - ⬜ Security vs hacking — what's the difference?
 - ⬜ Legal boundaries and responsible disclosure
+
+### Lab Setup
 - ⬜ Setting up a personal learning environment
 - ⬜ Understanding virtual machines
 - ⬜ Building an isolated practice network
 
 ## 01 — Networking Fundamentals
 
-### TCP/IP and IP addressing
+### TCP/IP and IP Addressing
 - ⬜ What is an IP address?
 - ⬜ IPv4 and IPv6
 - ⬜ Public and private IP addresses
@@ -52,7 +58,7 @@ Phases 00–02 are active now. Later phases are planned and may change as the co
 - ⬜ TLS certificates
 - ⬜ The TLS handshake
 
-### Routing and switching
+### Routing and Switching
 - ⬜ What is routing?
 - ⬜ What is switching?
 - ⬜ Routers vs switches
@@ -77,7 +83,7 @@ Phases 00–02 are active now. Later phases are planned and may change as the co
 
 ## 02 — Linux Fundamentals
 
-### Command line
+### Command Line
 - ⬜ Terminal and shell
 - ⬜ Navigating directories
 - ⬜ Working with files and directories
@@ -86,21 +92,21 @@ Phases 00–02 are active now. Later phases are planned and may change as the co
 - ⬜ Environment variables
 - ⬜ Basic system information
 
-### Filesystem and permissions
+### Filesystem and Permissions
 - ⬜ Linux filesystem hierarchy
 - ⬜ Users and groups
 - ⬜ File permissions
 - ⬜ chmod and chown
 - ⬜ sudo and root
 
-### Processes and services
+### Processes and Services
 - ⬜ Understanding processes
 - ⬜ Process management and signals
 - ⬜ systemd basics
 - ⬜ Managing services
 - ⬜ Viewing system logs
 
-### Bash scripting
+### Bash Scripting
 - ⬜ Variables
 - ⬜ Conditions
 - ⬜ Loops
@@ -108,7 +114,7 @@ Phases 00–02 are active now. Later phases are planned and may change as the co
 - ⬜ Automating repetitive tasks
 - ⬜ Log processing scripts
 
-### Package management
+### Package Management
 - ⬜ Package managers
 - ⬜ Installing, updating and removing software
 - ⬜ Repositories and trusted sources
@@ -128,6 +134,7 @@ OSINT · passive vs active recon · domain and DNS research · WHOIS · subdomai
 
 ### 06 — Scanning and Enumeration
 Host discovery · port scanning · TCP/UDP scans · service detection · Nmap · Netcat · directory enumeration · Gobuster · Nikto · false positives
+
 > All scanning is done only on your own systems or authorized labs.
 
 ### 07 — Network and System Security
@@ -135,10 +142,12 @@ Common attacks and defenses · packet sniffing · Wireshark · segmentation · L
 
 ### 08 — Web Security
 Cookies and sessions · same-origin policy · CORS · input validation · XSS · SQL injection · CSRF · broken access control · misconfiguration · file uploads · API security · Burp Suite · secure coding
+
 > Follows the current OWASP Top 10.
 
 ### 09 — Vulnerability Assessment and Controlled Exploitation
 CVEs and CVSS · security advisories · exploit concepts · Metasploit basics · shells and payloads · safe proof-of-concept · privilege escalation basics · cleaning up labs
+
 > Only on intentionally vulnerable machines or with explicit permission.
 
 ### 10 — Reporting
