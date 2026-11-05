@@ -48,7 +48,7 @@ PROJECT_REQUIRED = [
 
 
 def repo_slug() -> str:
-    return os.environ.get("GITHUB_REPOSITORY", "Muawiya-contact/network-security-lab")
+    return os.environ.get("GITHUB_REPOSITORY", "Coding-Moves/network-security-lab")
 
 
 def branch() -> str:
