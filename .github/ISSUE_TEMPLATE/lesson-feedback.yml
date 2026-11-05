@@ -1,0 +1,37 @@
+name: Lesson feedback
+description: Report a mistake, an outdated command, or something unclear in a lesson
+title: "[Lesson feedback] "
+labels: ["lesson-feedback"]
+body:
+  - type: input
+    id: lesson
+    attributes:
+      label: Which lesson?
+      description: File path or link
+      placeholder: lessons/01-networking-fundamentals/01-tcp-ip/01-what-is-an-ip-address.md
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type of feedback
+      options:
+        - Wrong information
+        - Command doesn't work / outdated
+        - Unclear explanation
+        - Missing topic or example
+        - Typo / small fix
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is the problem?
+    validations:
+      required: true
+  - type: textarea
+    id: fix
+    attributes:
+      label: Suggested fix
+      description: How should it be written? Add a source link if you have one.

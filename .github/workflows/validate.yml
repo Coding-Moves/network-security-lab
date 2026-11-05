@@ -1,0 +1,33 @@
+name: Check course
+
+# Runs on every PR, for everyone (maintainer too).
+# If the PR doesn't touch lessons/, projects/, course.yml or ROADMAP.md
+# the check passes straight away.
+#
+# Note: no "paths:" filter on purpose — if this check is "required",
+# a filtered-out PR would wait forever for it.
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check-course:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        run: pip install pyyaml
+
+      - name: Check lessons, projects and roadmap
+        run: python scripts/validate.py --base "${{ github.event.pull_request.base.sha }}"

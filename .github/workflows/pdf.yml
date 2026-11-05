@@ -1,0 +1,114 @@
+name: Course PDF
+
+# • Pull request  → builds a preview PDF (download it from the run's "Artifacts")
+# • Merge to main → updates the "latest" release with the new PDF
+# • Every 1 January (or run by hand) → saves a yearly edition, e.g. "2027 Edition"
+#
+# Download link that never changes:
+#   https://github.com/<owner>/<repo>/releases/download/latest/network-security-lab.pdf
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  schedule:
+    - cron: "10 0 1 1 *"   # 1 January, 00:10 UTC
+  workflow_dispatch:
+    inputs:
+      edition:
+        description: "Edition name (leave empty for '<year> Edition')"
+        required: false
+
+concurrency:
+  group: pdf-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # full history → growth chart in the PDF
+
+      - name: Skip PRs that don't touch the course
+        id: scope
+        run: |
+          if [ "${{ github.event_name }}" != "pull_request" ]; then
+            echo "build=true" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if git diff --name-only "${{ github.event.pull_request.base.sha }}...HEAD" \
+             | grep -qE '^(lessons/|projects/|course.yml|scripts/)'; then
+            echo "build=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "No course changes — no preview needed."
+            echo "build=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.scope.outputs.build == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Install
+        if: steps.scope.outputs.build == 'true'
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q libpango-1.0-0 libpangoft2-1.0-0 fonts-noto-core fonts-dejavu-core
+          pip install -r scripts/requirements.txt
+
+      - name: Pick edition name
+        if: steps.scope.outputs.build == 'true'
+        id: ed
+        run: |
+          case "${{ github.event_name }}" in
+            schedule)          echo "name=$(date +%Y) Edition" >> "$GITHUB_OUTPUT" ;;
+            workflow_dispatch) n="${{ github.event.inputs.edition }}"; echo "name=${n:-$(date +%Y) Edition}" >> "$GITHUB_OUTPUT" ;;
+            pull_request)      echo "name=Preview — PR #${{ github.event.number }}" >> "$GITHUB_OUTPUT" ;;
+            *)                 echo "name=Latest edition" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Build PDF
+        if: steps.scope.outputs.build == 'true'
+        run: python scripts/build_pdf.py --edition "${{ steps.ed.outputs.name }}"
+
+      # ── PR: preview only ──
+      - name: Upload preview
+        if: github.event_name == 'pull_request' && steps.scope.outputs.build == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: course-pdf-preview
+          path: dist/network-security-lab.pdf
+          retention-days: 14
+
+      # ── main: refresh the "latest" release ──
+      - name: Update latest release
+        if: github.event_name == 'push'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete latest --cleanup-tag --yes 2>/dev/null || true
+          gh release create latest dist/network-security-lab.pdf \
+            --target "${{ github.sha }}" \
+            --title "Course PDF — latest" \
+            --notes "Auto-built from \`${{ github.sha }}\` on $(date -u +'%d %b %Y'). Lessons not written yet are marked *Coming soon*." \
+            --latest
+
+      # ── yearly edition ──
+      - name: Save yearly edition
+        if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EDITION: ${{ steps.ed.outputs.name }}
+        run: |
+          TAG="edition-$(echo "$EDITION" | tr '[:upper:] ' '[:lower:]-' | tr -cd 'a-z0-9-')"
+          cp dist/network-security-lab.pdf "dist/network-security-lab-${TAG#edition-}.pdf"
+          gh release delete "$TAG" --cleanup-tag --yes 2>/dev/null || true
+          gh release create "$TAG" "dist/network-security-lab-${TAG#edition-}.pdf" \
+            --target "${{ github.sha }}" \
+            --title "Course PDF — $EDITION" \
+            --notes "Snapshot of the course on $(date -u +'%d %b %Y')." \
+            --latest=false

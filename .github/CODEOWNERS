@@ -1,0 +1,10 @@
+# The maintainer must approve every pull request.
+* @Muawiya-contact
+
+# Lessons and course files belong to the maintainer only.
+/lessons/            @Muawiya-contact
+/course.yml          @Muawiya-contact
+/ROADMAP.md          @Muawiya-contact
+/LESSON_TEMPLATE.md  @Muawiya-contact
+/scripts/            @Muawiya-contact
+/.github/            @Muawiya-contact
